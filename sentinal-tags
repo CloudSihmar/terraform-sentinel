@@ -1,0 +1,12 @@
+
+## Policy to check tags on all aws instances
+
+import "tfplan"
+
+main = rule {
+   all tfplan.resources.aws_instance as _, instances {
+      all instances as _, r {
+            (length(r.applied.tags) else 0) >= 1
+      }
+   }
+}
